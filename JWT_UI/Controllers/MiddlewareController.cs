@@ -42,6 +42,12 @@ namespace JWT_UI.Controllers
 
 			}
 		}
+
+		[HttpPost]
+		public async void  Intersepter()
+		{
+			await  _dbContext.SaveChangesAsync();
+		}
 	}
 
 }
