@@ -1,6 +1,5 @@
 
 using Aplication.Services;
-
 using Infrastructure.DataAccess;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.Middleware;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
+using Infrastructure;
 
 namespace JWT_UI
 {
@@ -27,29 +28,16 @@ namespace JWT_UI
 
 			// Add services to the container.
 
+            builder.Services.AddIfrastuctureServices(builder.Configuration);
 			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-			builder.Services.AddScoped<ISaveChangesInterceptor, interceptor>();
-			builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IIdentityServise, IdentityService>();
-			//  builder.Services.AddScoped<ILogger<ExceptionHandlerMiddleware>, Logger<ExceptionHandlerMiddleware>>();
-			builder.Services.AddDbContext<IdentityDbContext>((sp, options) =>
-			{
-				options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-#if (UseSQLite)
-            options.UseSqlite(connectionString);
-#else
-				options.UseNpgsql("ConnetionString");
-#endif
-			});
 
-			builder.Services.AddDbContext<IdentityDbContext>(options =>
-            options.UseNpgsql(builder.Configuration.GetConnectionString("ConnetionString")));
 
-            builder.Services.AddCors();
+
+			builder.Services.AddCors();
             builder.Services.AddCors(opt =>
             {
                 opt.AddPolicy("PDP",
