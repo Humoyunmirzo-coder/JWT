@@ -1,4 +1,5 @@
 ﻿using Domain.Entity.AuditEnnum;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Domain.Entity
 		public int Id { get; set; }	
 		public string EntityName { get; set; }
 		public DateTime Date { get; set; }
-		public OperationType OperationType { get; set; }
+		public EntityState OperationType { get; set; }
         public string UpdateVelueJson { get; set; }
 		public string? UserName { get; set; }
 

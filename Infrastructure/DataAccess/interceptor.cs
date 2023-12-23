@@ -1,5 +1,5 @@
 ﻿using Domain.Entity;
-using Microsoft.AspNet.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -46,7 +46,7 @@ namespace Infrastructure.DataAccess
 					{
 						EntityName = entry.Entity.GetType().Name,
 						Date = DateTime.UtcNow,
-						OperationType = Domain.Entity.AuditEnnum.OperationType.Addet,
+						OperationType = entry.State,
 						UpdateVelueJson = entry.CurrentValues.ToObject().ToString(),
 						UserName = "Najim",
 						Id = entry.Entity.Id
@@ -54,7 +54,6 @@ namespace Infrastructure.DataAccess
 					};
 					context.Add(auditlog);
 				}
-			
 			}
 		}
 

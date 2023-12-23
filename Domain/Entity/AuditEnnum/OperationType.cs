@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entity.AuditEnnum
 {
-	public  enum  OperationType
+	public  enum  OperationType : byte
 	{
-		Addet,
+		Addet=1,
 		Modified,
 		Unchanged
 

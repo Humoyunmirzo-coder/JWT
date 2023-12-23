@@ -2,7 +2,6 @@
 using Domain.Entity;
 using Domain.Model;
 using Infrastructure.DataAccess;
-using Microsoft.AspNet.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

@@ -23,5 +23,5 @@ namespace Domain.Entity
 		public string? LastModifiedBy { get; set; }
 	}
 }
-	}
-}
+	
+
