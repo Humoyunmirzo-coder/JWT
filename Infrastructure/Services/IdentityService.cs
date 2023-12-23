@@ -85,10 +85,6 @@ namespace Infrastructure.Services
             return isSuccess ? new(newToken) : new("Failed");
         }
 
-        public Task<Response<Token>> Register(User user)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Response<GetUserModel>> RegisterAsync(User user)
         {

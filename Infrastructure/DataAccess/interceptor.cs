@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Infrastructure.DataAccess
@@ -37,28 +38,34 @@ namespace Infrastructure.DataAccess
 
 			foreach (var entry in context.ChangeTracker.Entries<BaseAuditableEntity>())
 			{
-				if (entry.State == EntityState.Added)
+				if (entry.State == EntityState.Added ||
+					entry.State == EntityState.Modified ||
+					entry.State == EntityState.Deleted)
 				{
-					entry.Entity.Id =1;
-					entry.Entity.CreatedDate = DateTime.UtcNow;
-				}
+					var auditlog = new Auditlog()
+					{
+						EntityName = entry.Entity.GetType().Name,
+						Date = DateTime.UtcNow,
+						OperationType = Domain.Entity.AuditEnnum.OperationType.Addet,
+						UpdateVelueJson = entry.CurrentValues.ToObject().ToString(),
+						UserName = "Najim",
+						Id = entry.Entity.Id
 
-				if (entry.State == EntityState.Added || entry.State == EntityState.Modified )
-				{
-					entry.Entity.Id = 1;
-					entry.Entity.UpdatedDate =DateTime.UtcNow;
+					};
+					context.Add(auditlog);
 				}
+			
 			}
 		}
 
-		//public static class Extensions
-		//{
-		//	public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
-		//		entry.References.Any(r =>
-		//			r.TargetEntry != null &&
-		//			r.TargetEntry.Metadata.IsOwned() &&
-		//			(r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
-		//}
 
+	}
+	public static class Extensions
+	{
+		public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
+			entry.References.Any(r =>
+				r.TargetEntry != null &&
+				r.TargetEntry.Metadata.IsOwned() &&
+				(r.TargetEntry.State == EntityState.Added || r.TargetEntry.State == EntityState.Modified));
 	}
 }
