@@ -13,6 +13,7 @@ namespace Domain.Entity
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+      
        
         public virtual ICollection<User > User { get; set; }
 

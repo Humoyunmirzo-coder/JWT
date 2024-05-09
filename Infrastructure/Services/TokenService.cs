@@ -19,8 +19,6 @@ namespace Infrastructure.Services
             _configuration = configuration;
         }
 
-
-
         public async Task<string> GenerateRefreshTokensAsync(User user)
         {
 
